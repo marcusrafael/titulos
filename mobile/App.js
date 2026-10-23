@@ -9,13 +9,14 @@ import {
   View,
 } from "react-native";
 
+const IP = "192.168.0.102";
+
 export default function App() {
   const [titulos, setTitulos] = useState([]);
   const [novoTitulo, setNovoTitulo] = useState("");
-  const [idEditando, setIdEditando] = useState(null);
 
   async function cadastrar() {
-    const response = await fetch("http://10.13.180.26:3000/api/titulos", {
+    const response = await fetch(`http://${IP}:3000/api/titulos`, {
       method: "POST",
       body: JSON.stringify({ titulo: novoTitulo }),
       headers: {
@@ -27,37 +28,41 @@ export default function App() {
   }
 
   async function listar() {
-    const response = await fetch("http://10.13.180.26:3000/api/titulos");
+    const response = await fetch(`http://${IP}:3000/api/titulos`);
     const json = await response.json();
     setTitulos(json);
   }
 
   async function remover(id) {
-    const response = await fetch(`http://10.13.180.26:3000/api/titulos/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `http://${IP}:3000/api/titulos/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
       },
-    });
+    );
     listar();
   }
 
   async function atualizar(id) {
-    const response = await fetch(`http://10.13.180.26:3000/api/titulos/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `http://${IP}:3000/api/titulos/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ titulo: novoTitulo }),
       },
-      body: JSON.stringify({ titulo: novoTitulo }),
-    });
+    );
     setNovoTitulo("");
-    setIdEditando(null);
     listar();
   }
 
   function editar(titulo) {
     setNovoTitulo(titulo.titulo);
-    setIdEditando(titulo.id);
   }
 
   return (

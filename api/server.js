@@ -16,7 +16,7 @@ let id = titulos.length + 1;
 
 app.get("/api/titulos", (request, response) => {
   console.log(titulos);
-  response.json(titulos);
+  return response.status(200).json(titulos);
 });
 
 app.post("/api/titulos", (request, response) => {
