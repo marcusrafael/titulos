@@ -12,8 +12,6 @@ let titulos = [
   { id: 4, titulo: "Botafogo-PB 2013" },
 ];
 
-let id = titulos.length + 1;
-
 app.get("/api/titulos", (request, response) => {
   console.log(titulos);
   return response.status(200).json(titulos);
